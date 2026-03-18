@@ -1,0 +1,3 @@
+feed_publisher_name,feed_publisher_url,feed_lang,feed_version,feed_contact_email,feed_contact_url
+"gtfs.de - GTFS für Deutschland, Daten bereitgestellt von DELFI e.V.",http://gtfs.de,de,latest-fv-free,info@gtfs.de,https://gtfs.de
+"gtfs.de - GTFS für Deutschland, Daten bereitgestellt von DELFI e.V.",http://gtfs.de,de,latest-rv-free,info@gtfs.de,https://gtfs.de

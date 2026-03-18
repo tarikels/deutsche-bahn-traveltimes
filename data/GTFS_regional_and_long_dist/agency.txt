@@ -1,0 +1,135 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang
+1,Nederlandse Spoorwegen,https://www.bahn.de,Europe/Berlin,de
+10,PKP Intercity,https://www.bahn.de,Europe/Berlin,de
+11,Ceske Drahy,https://www.bahn.de,Europe/Berlin,de
+12,ÖBB,https://www.bahn.de,Europe/Berlin,de
+13,DB Fernverkehr (Codesharing),https://www.bahn.de,Europe/Berlin,de
+2,SÜWEX,https://www.bahn.de,Europe/Berlin,de
+3,MAV,https://www.bahn.de,Europe/Berlin,de
+4,SBB,https://www.bahn.de,Europe/Berlin,de
+5,HZZP,https://www.bahn.de,Europe/Berlin,de
+6,Dänische Staatsbahnen,https://www.bahn.de,Europe/Berlin,de
+7,DB Fernverkehr AG,https://www.bahn.de,Europe/Berlin,de
+8,SNCF,https://www.bahn.de,Europe/Berlin,de
+9,ZSSK,https://www.bahn.de,Europe/Berlin,de
+REG_1,Kasbachtalbahn,https://www.bahn.de,Europe/Berlin,de
+REG_10,DB Regio AG Mitte Region Hessen,https://www.bahn.de,Europe/Berlin,de
+REG_100,EVB ELBE-WESER GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_101,ZVON Oberlausitz-Niederschlesien,https://www.bahn.de,Europe/Berlin,de
+REG_102,PKP Intercity,https://www.bahn.de,Europe/Berlin,de
+REG_103,THURBO,https://www.bahn.de,Europe/Berlin,de
+REG_104,Meridian,https://www.bahn.de,Europe/Berlin,de
+REG_105,EUROSTAR,https://www.bahn.de,Europe/Berlin,de
+REG_106,Ostdeutsche Eisenbahn GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_107,Harzer Schmalspurbahn,https://www.bahn.de,Europe/Berlin,de
+REG_108,Hessische Landesbahn,https://www.bahn.de,Europe/Berlin,de
+REG_109,Rhenus Veniro,https://www.bahn.de,Europe/Berlin,de
+REG_11,Südwestdeutsche Verkehrs-AG,https://www.bahn.de,Europe/Berlin,de
+REG_110,City-Bahn Chemnitz,https://www.bahn.de,Europe/Berlin,de
+REG_111,DB Regio Mitte,https://www.bahn.de,Europe/Berlin,de
+REG_112,AKN Eisenbahn AG,https://www.bahn.de,Europe/Berlin,de
+REG_113,DB RegioNetz Verkehrs GmbH Erzgebirgsbahn,https://www.bahn.de,Europe/Berlin,de
+REG_114,800151 DB Regio AG Nordost,https://www.bahn.de,Europe/Berlin,de
+REG_115,Mitteldeutsche Regiobahn,https://www.bahn.de,Europe/Berlin,de
+REG_116,SNCF,https://www.bahn.de,Europe/Berlin,de
+REG_117,S Bahn Berlin GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_118,DB Regio AG Mitte,https://www.bahn.de,Europe/Berlin,de
+REG_119,DB Fernverkehr (Codesharing),https://www.bahn.de,Europe/Berlin,de
+REG_12,Harzer Schmalspurbahnen,https://www.hsb.de/,Europe/Berlin,de
+REG_120,NEB Niederbarnimer Eisenbahn,https://www.bahn.de,Europe/Berlin,de
+REG_121,SDG Sächsische Dampfeisenbahngesellschaft mbH,https://www.bahn.de,Europe/Berlin,de
+REG_13,metronom,https://www.bahn.de,Europe/Berlin,de
+REG_14,HZZP,https://www.bahn.de,Europe/Berlin,de
+REG_15,Norddeutsche Eisenbahn Gesellschaft,https://www.bahn.de,Europe/Berlin,de
+REG_16,Montafoner Bahn,https://www.bahn.de,Europe/Berlin,de
+REG_17,Arverio Baden-Württemberg GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_18,trilex - Die Länderbahn GmbH DLB,https://www.bahn.de,Europe/Berlin,de
+REG_19,DB RegioNetz Verkehrs GmbH Kurhessenbahn,https://www.bahn.de,Europe/Berlin,de
+REG_2,TRI Train Rental GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_20,Flixtrain,https://www.bahn.de,Europe/Berlin,de
+REG_21,Freiberger Eisenbahngesellschaft,https://www.bahn.de,Europe/Berlin,de
+REG_22,Bodensee-Oberschwaben-Bahn,https://www.bahn.de,Europe/Berlin,de
+REG_23,agilis-Schnellzug,https://www.bahn.de,Europe/Berlin,de
+REG_24,GYRB Arverio Bayern GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_25,Bentheimer Eisenbahn,https://www.bahn.de,Europe/Berlin,de
+REG_26,oberpfalzbahn - Die Länderbahn GmbH DLB,https://www.bahn.de,Europe/Berlin,de
+REG_27,Nordbahn Eisenbahngesellschaft,https://www.bahn.de,Europe/Berlin,de
+REG_28,DB Fernverkehr AG,https://www.bahn.de,Europe/Berlin,de
+REG_29,SBB,https://www.bahn.de,Europe/Berlin,de
+REG_3,Bayerische Regiobahn,https://www.bahn.de,Europe/Berlin,de
+REG_30,ZSSK,https://www.bahn.de,Europe/Berlin,de
+REG_31,ÖBB,https://www.bahn.de,Europe/Berlin,de
+REG_32,GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_33,Bayerische Oberlandbahn,https://www.bahn.de,Europe/Berlin,de
+REG_34,KVG M,https://www.bahn.de,Europe/Berlin,de
+REG_35,MittelrheinBahn (Trans Regio),https://www.bahn.de,Europe/Berlin,de
+REG_36,RV Start Deutschland GmbH Niedersachsen-Mitte,https://www.bahn.de,Europe/Berlin,de
+REG_37,Nachtzug,https://www.bahn.de,Europe/Berlin,de
+REG_38,Verkehrsverbund Oberelbe,https://www.bahn.de,Europe/Berlin,de
+REG_39,WestfalenBahn,https://www.bahn.de,Europe/Berlin,de
+REG_4,agilis,https://www.bahn.de,Europe/Berlin,de
+REG_40,REGIOBAHN,https://www.bahn.de,Europe/Berlin,de
+REG_41,ABELLIO Rail Mitteldeutschland GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_42,Hanseatische Eisenbahn GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_43,DB Regio Stuttgart,https://www.bahn.de,Europe/Berlin,de
+REG_44,Süd-Thüringen-Bahn,https://www.bahn.de,Europe/Berlin,de
+REG_45,cantus Verkehrsgesellschaft,https://www.bahn.de,Europe/Berlin,de
+REG_46,VIAS Rail GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_47,S-Bahn Hamburg,https://www.bahn.de,Europe/Berlin,de
+REG_48,MAV,https://www.bahn.de,Europe/Berlin,de
+REG_49,DB ZugBus Regionalverkehr Alb-Bodensee,https://www.bahn.de,Europe/Berlin,de
+REG_5,SÜWEX,https://www.bahn.de,Europe/Berlin,de
+REG_50,waldbahn - Die Länderbahn GmbH DLB,https://www.bahn.de,Europe/Berlin,de
+REG_51,Erfurter Bahn Express,https://www.bahn.de,Europe/Berlin,de
+REG_52,DB Regio AG Südost,https://www.bahn.de,Europe/Berlin,de
+REG_53,enno,https://www.bahn.de,Europe/Berlin,de
+REG_54,RV Start Deutschland GmbH Mitteldeutschland,https://www.bahn.de,Europe/Berlin,de
+REG_55,National Express,https://www.bahn.de,Europe/Berlin,de
+REG_56,alex - Die Länderbahn GmbH DLB,https://www.bahn.de,Europe/Berlin,de
+REG_57,RheinRuhrBahn,https://www.bahn.de,Europe/Berlin,de
+REG_58,DB Regio AG Baden-Württemberg,https://www.bahn.de,Europe/Berlin,de
+REG_59,DB Regio AG NRW,https://www.bahn.de,Europe/Berlin,de
+REG_6,Karlsruher Verkehrsverbund,https://www.bahn.de,Europe/Berlin,de
+REG_60,vogtlandbahn - Die Länderbahn GmbH DLB,https://www.bahn.de,Europe/Berlin,de
+REG_61,Albtal-Verkehrs-Gesellschaft,https://www.bahn.de,Europe/Berlin,de
+REG_62,ABELLO Rail Mitteldeutschland GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_63,DB RegioNetz Verkehrs GmbH Oberweisbacher Berg+Schwa,https://www.bahn.de,Europe/Berlin,de
+REG_64,SNCB,https://www.bahn.de,Europe/Berlin,de
+REG_65,S-Bahn Hannover,https://www.bahn.de,Europe/Berlin,de
+REG_66,DB Regio AG Mitte Region Südwest,https://www.bahn.de,Europe/Berlin,de
+REG_67,DB Regio AG Nord,https://www.bahn.de,Europe/Berlin,de
+REG_68,Daadetalbahn,https://www.bahn.de,Europe/Berlin,de
+REG_69,VIAS GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_7,Verkehrsverbund Stuttgart,https://www.bahn.de,Europe/Berlin,de
+REG_70,Ceske Drahy,https://www.bahn.de,Europe/Berlin,de
+REG_71,Rurtalbahn,https://www.bahn.de,Europe/Berlin,de
+REG_72,Berchtesgadener Land Bahn,https://www.bahn.de,Europe/Berlin,de
+REG_73,DB Regio AG Bayern,https://www.bahn.de,Europe/Berlin,de
+REG_74,AUTOZUG Sylt,https://www.bahn.de,Europe/Berlin,de
+REG_75,GYRE Arverio Bayern GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_76,Trenitalia,https://www.bahn.de,Europe/Berlin,de
+REG_77,vlexx,https://www.bahn.de,Europe/Berlin,de
+REG_78,DB Regio AG Nordost,https://www.bahn.de,Europe/Berlin,de
+REG_79,Gesellschaft zur Förderung des ÖPNV Regensburg,https://www.bahn.de,Europe/Berlin,de
+REG_8,BahnTouristikExpress,https://www.bahn.de,Europe/Berlin,de
+REG_80,RV Start Deutschland GmbH Unterelbe,https://www.bahn.de,Europe/Berlin,de
+REG_81,Bayerische Zugspitzbahn,https://www.bahn.de,Europe/Berlin,de
+REG_82,NordWestBahn,https://www.bahn.de,Europe/Berlin,de
+REG_83,RV Start Deutschland GmbH Taunus,https://www.bahn.de,Europe/Berlin,de
+REG_84,MittelSachsen,https://www.bahn.de,Europe/Berlin,de
+REG_85,WESTbahn,https://www.bahn.de,Europe/Berlin,de
+REG_86,Pressnitztalbahn,https://www.bahn.de,Europe/Berlin,de
+REG_87,Brohltalbahn,https://www.bahn.de,Europe/Berlin,de
+REG_88,Erfurter Bahn,https://www.bahn.de,Europe/Berlin,de
+REG_89,Schwäbische Alb-Bahn,https://www.bahn.de,Europe/Berlin,de
+REG_9,DB RegioNetz Verkehrs GmbH Westfrankenbahn,https://www.bahn.de,Europe/Berlin,de
+REG_90,trilex-express - Die Länderbahn GmbH DLB,https://www.bahn.de,Europe/Berlin,de
+REG_91,eurobahn,https://www.bahn.de,Europe/Berlin,de
+REG_92,DB RegioNetz Verkehrs GmbH Südostbayernbahn,https://www.bahn.de,Europe/Berlin,de
+REG_93,Süd-Thüringen-Bahn Express,https://www.bahn.de,Europe/Berlin,de
+REG_94,Mecklenburgische Bäderbahn Molli,https://www.bahn.de,Europe/Berlin,de
+REG_95,Go-Ahead,https://www.bahn.de,Europe/Berlin,de
+REG_96,erixx,https://www.bahn.de,Europe/Berlin,de
+REG_97,SBB GmbH,https://www.bahn.de,Europe/Berlin,de
+REG_98,Sächsisch-Oberlausitzer Eisenbahngesellschaft,https://www.bahn.de,Europe/Berlin,de
+REG_99,CFL,https://www.bahn.de,Europe/Berlin,de
