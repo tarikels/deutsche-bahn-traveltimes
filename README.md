@@ -64,7 +64,7 @@ Reusable components include:
 Clone the repository and create a virtual environment:
 
 ```bash
-git clone https://github.com/tarikels/german-railway-traveltimes.git
+git clone https://github.com/tarikels/deutsche-bahn-traveltimes.git
 cd german-railway-traveltimes
 python -m venv .venv
 ```
