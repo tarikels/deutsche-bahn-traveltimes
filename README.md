@@ -64,9 +64,20 @@ Reusable components include:
 Clone the repository and create a virtual environment:
 
 ```bash
+## To Download and install
+
+Clone the repository and create a virtual environment:
+
 git clone https://github.com/tarikels/deutsche-bahn-traveltimes.git
 cd deutsche-bahn-traveltimes
 python -m venv .venv
+
+# Activate the virtual environment
+.venv\Scripts\Activate.ps1
+
+# Install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
 ### Example Routing Query
