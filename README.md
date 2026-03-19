@@ -81,7 +81,7 @@ pip install -r requirements.txt
 
 ### Example Routing Query
 
-For example the routing pipeline can be reused independently. After installing the dependencies, load a GTFS feed, filter it to a service day, build the RAPTOR indices, and run a query between two stops. The repository exposes this as a small public API via `gtfs_toolbox` and `routing_algorithm`.
+For example the routing pipeline can be reused independently. After installing the dependencies, load a GTFS feed, filter it to a service day, build the RAPTOR indices, and run a query between two stops. The repository exposes this as a small public API via `gtfs_toolbox` and `ratpor_core`.
 
 ```python
 from gtfs_toolbox import load_feed, subset_feed_by_date_window, gtfs_time_to_seconds
