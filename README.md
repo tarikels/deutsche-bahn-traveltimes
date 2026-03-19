@@ -65,7 +65,7 @@ Clone the repository and create a virtual environment:
 
 ```bash
 git clone https://github.com/tarikels/deutsche-bahn-traveltimes.git
-cd german-railway-traveltimes
+cd deutsche-bahn-traveltimes
 python -m venv .venv
 ```
 
