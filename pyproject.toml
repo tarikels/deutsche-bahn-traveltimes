@@ -26,13 +26,13 @@ dev = [
 [tool.setuptools]
 include-package-data = true
 
+[tool.setuptools.package-dir]
+"" = "src"
+
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["app*", "gtfs_toolbox*", "raptor_core*"]
-exclude = ["tests*"]
+where = ["src"]
+include = ["gtfs_toolbox*", "raptor_core*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
