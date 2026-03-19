@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deutsche-bahn-traveltimes"
+version = "0.1.0"
+description = "GTFS-based railway accessibility analysis, RAPTOR routing, OD generation, and FastAPI map UI for Germany."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=2.0",
+    "geopandas>=0.14",
+    "pyarrow>=14.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+    "requests>=2.31",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "src*", "gtfs_toolbox*", "raptor_core*"]
