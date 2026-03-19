@@ -17,9 +17,22 @@ dependencies = [
     "requests>=2.31",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "httpx>=0.27",
+]
+
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["app*", "src*", "gtfs_toolbox*", "raptor_core*"]
+include = ["app*", "gtfs_toolbox*", "raptor_core*"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
