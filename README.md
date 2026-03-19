@@ -74,24 +74,36 @@ python -m venv .venv
 For example the routing pipeline can be reused independently. After installing the dependencies, load a GTFS feed, filter it to a service day, build the RAPTOR indices, and run a query between two stops. The repository exposes this as a small public API via `gtfs_toolbox` and `routing_algorithm`.
 
 ```python
-from gtfs_toolbox import gtfs_io_utilities, gtfs_subset_utilities
+from gtfs_toolbox import load_feed, subset_feed_by_date_window, gtfs_time_to_seconds
 from raptor_core import (
     build_raptor_indices,
-    build_depidx_cache,
-    compute_raptor_journey_by_name,
+    prepare_departure_lookup,
+    route_by_stop_names,
+    reconstruct_connection,
 )
 
-feed = loader.load_feed("PATH/TO/YOUR/GTFS", parse_stop_times=True)
-day_feed = filter.filter_by_date_range(feed, start="20260224", end="20260224")
-indices = build_raptor_indices(day_feed, on="20260224")
-build_depidx_cache(indices)
+feed = load_feed("PATH/TO/YOUR/GTFS", parse_stop_times=True)
+day_feed = subset_feed_by_date_window(
+    feed,
+    start="20260224",
+    end="20260224",
+)
 
-result = compute_raptor_journey_by_name(
+indices = build_raptor_indices(day_feed, on="20260224")
+prepare_departure_lookup(indices)
+
+raptor_routes, dest_ids = route_by_stop_names(
     indices=indices,
-    stops_feed=day_feed["stops.txt"],
+    stops_table=day_feed["stops.txt"],
     origin_name="Berlin Hbf",
     destination_name="Leipzig Hbf",
     departure_time="08:00:00",
+)
+
+result = reconstruct_connection(
+    raptor_routes,
+    dest_ids,
+    origin_dep_time=gtfs_time_to_seconds("08:00:00"),
 )
 ```
 
