@@ -4,7 +4,3 @@ __pycache__/
 venv/
 .env
 .idea/
-main.py
-additional_traveltimes.py
-app/ui/page.py
-app/ui/page_original.py
