@@ -238,7 +238,10 @@ DATA_PAGE_HTML = r"""
           Code und Datengrundlage sind über <a href="https://github.com/tarikels/deutsche-bahn-traveltimes" target="_blank" rel="noopener noreferrer">GitHub</a> verfügbar. 
           Das Projekt und Berechnungen können außerdem mit anderen GTFS-Datensätzen, Zonierungen und Auswahlmethoden für repräsentative Haltestellen weiterverwendet werden. 
           Einige Erweiterungen sind bereits im Code implementiert, zudem wir im Code die genaue Berechnungsmethodik der Reisezeiten ersichtlich.
-        </p>      
+        </p>
+        <p>
+        DISCLAIMER: Dieses Projekt ist in keiner Verbindung zur Deutschen Bahn. Alle Angaben erfolgen ohne Gewähr und können Fehler enthalten.
+        </p>
 
         <a class="back" href="/">← Zurück zur Karte</a>
       </section>
