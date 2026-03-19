@@ -234,13 +234,45 @@ DATA_PAGE_HTML = r"""
           wurden diese Zeiten abhängig von der Tageszeit mit Faktoren von 1,0, 1,1 oder 1,2 angepasst, um beispielsweise
           Stau und Parksuchzeiten näherungsweise einzubeziehen.
         </p>
+        <section class="card">
+        <h2>Bedeutung der Metriken</h2>
+
+        <p>
+          <strong>Reisezeit Zug:</strong> Dargestellt wird die schnellste Verbindung, die in der jeweils gewählten
+          Stunde am repräsentativen Halt einer Zone startet. Gibt es innerhalb dieser Stunde keine passende Abfahrt,
+          bleibt der Wert leer. Für Wochentage wird in dieser Anwendung der Dienstag, 24. Februar 2026, als
+          Referenztag der betrachteten Woche verwendet.
+        </p>
+
+        <p>
+          <strong>Reisezeit Auto:</strong> Dargestellt wird die Pkw-Reisezeit zwischen den repräsentativen Halten der
+          Zonen, berechnet über die openrouteservice API. Um unterschiedliche Verkehrsbedingungen grob abzubilden,
+          werden die Fahrzeiten je nach Tageszeit gewichtet: mit dem Faktor 1,2 für die Stunden 7 bis 9 Uhr und
+          15 bis 18 Uhr, mit dem Faktor 1,0 für die Stunden 22 bis 5 Uhr und mit dem Faktor 1,1 für alle übrigen
+          Stunden.
+        </p>
+
+        <p>
+          <strong>Umstiege Zug:</strong> Angegeben wird die Anzahl der Umstiege der für die Metrik „Reisezeit Zug“
+          ausgewählten schnellsten Verbindung. Fußwege zwischen Haltestellen oder innerhalb von Stationen werden dabei
+          nicht als Umstieg gezählt.
+        </p>
+
+        <p>
+          <strong>ÖPNV/MIV Reisezeitverhältnis:</strong> Diese Kennzahl beschreibt das Verhältnis von Reisezeit Zug zu
+          Reisezeit Auto. Ein Wert von 1,0 bedeutet, dass beide Verkehrsmittel gleich schnell sind. Werte über 1,0
+          zeigen an, dass die Reise mit dem Zug länger dauert als mit dem Auto, während Werte unter 1,0 auf eine
+          schnellere Verbindung im öffentlichen Verkehr hinweisen.
+        </p>
+      </section>
         <p>
           Code und Datengrundlage sind über <a href="https://github.com/tarikels/deutsche-bahn-traveltimes" target="_blank" rel="noopener noreferrer">GitHub</a> verfügbar. 
           Das Projekt und Berechnungen können außerdem mit anderen GTFS-Datensätzen, Zonierungen und Auswahlmethoden für repräsentative Haltestellen weiterverwendet werden. 
           Einige Erweiterungen sind bereits im Code implementiert, zudem wir im Code die genaue Berechnungsmethodik der Reisezeiten ersichtlich.
         </p>
         <p>
-        DISCLAIMER: Dieses Projekt ist in keiner Verbindung zur Deutschen Bahn. Alle Angaben erfolgen ohne Gewähr und können Fehler enthalten.
+          <strong>Disclaimer:</strong> Dieses Projekt steht in keiner Verbindung zur Deutschen Bahn.
+          Alle Angaben erfolgen ohne Gewähr und können Fehler oder Ungenauigkeiten enthalten.
         </p>
 
         <a class="back" href="/">← Zurück zur Karte</a>
