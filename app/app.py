@@ -15,6 +15,7 @@ from app.config import INDEX_HTML
 from app.services.od import od_metric, available_periods
 from app.services.zones import zones_geojson, zones_index
 from app.ui.datapage import DATA_PAGE_HTML
+from app.ui.datapage_en import DATA_PAGE_HTML_EN
 from pathlib import Path
 
 app = FastAPI(title="German Traveltime Quality - Map UI", version="1.0.0")
@@ -47,13 +48,20 @@ def about_data():
     return HTMLResponse(DATA_PAGE_HTML)
 
 
+@app.get("/about-data-en", response_class=HTMLResponse)
+def about_data_en():
+    """Serve the data information page. EN version."""
+    return HTMLResponse(DATA_PAGE_HTML_EN)
+
+
 @app.get("/api/od/metric", response_class=JSONResponse)
 def api_od_metric(
     period: str = Query(..., description="e.g. 2026W09"),
     day_type: str = Query(..., description="weekday|saturday|sunday"),
     hour: int = Query(..., ge=0, le=23),
     origin_zone_id: str | None = Query(None),
-        metric: str = Query("travel_time", description="travel_time|car_travel_time|transfers|pt_car_ratio")):
+    metric: str = Query("travel_time", description="travel_time|car_travel_time|transfers|pt_car_ratio"),
+    dataset: str = Query("all", description="all|regional")):
     """
     Return choropleth values for a selected metric (travel_time or transfers).
 
@@ -66,7 +74,7 @@ def api_od_metric(
         hour=hour,
         origin_zone_id=origin_zone_id,
         metric=metric,
-    )
+        dataset=dataset)
 
 
 @app.get("/", response_class=HTMLResponse)

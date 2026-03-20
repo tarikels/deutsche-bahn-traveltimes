@@ -13,7 +13,7 @@ frontend.
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Erreichbarkeit im Schienenverkehr</title>
+  <title data-i18n="page_title">Erreichbarkeit im Schienenverkehr</title>
 
   <link
     rel="stylesheet"
@@ -35,90 +35,102 @@ frontend.
 <body>
   <div class="app">
     <div class="sidebar">
-      <h2>Filterauswahl</h2>
+      <h2 data-i18n="sidebar.filters">Filterauswahl</h2>
 
       <div class="field">
-        <div class="muted">Stand: Fahrplan 2026 Kalenderwoche 9</div>
+        <div class="muted" data-i18n="sidebar.status">Stand: Fahrplan 2026 Kalenderwoche 9</div>
       </div>
 
       <div class="field">
-        <label>Tagtyp</label>
+        <label data-i18n="sidebar.daytype">Tagtyp</label>
         <div class="daytype-tabs" role="tablist" aria-label="Tagtyp">
-          <button type="button" class="daytype-tab active" data-value="weekday">Wochentag</button>
-          <button type="button" class="daytype-tab" data-value="saturday">Samstag</button>
-          <button type="button" class="daytype-tab" data-value="sunday">Sonntag</button>
+          <button type="button" class="daytype-tab active" data-value="weekday" data-i18n="daytype.weekday">Wochentag</button>
+          <button type="button" class="daytype-tab" data-value="saturday" data-i18n="daytype.saturday">Samstag</button>
+          <button type="button" class="daytype-tab" data-value="sunday" data-i18n="daytype.sunday">Sonntag</button>
         </div>
       </div>
 
       <div class="field">
-        <label>Darstellen nach</label>
+        <label data-i18n="sidebar.metric">Darstellen nach</label>
         <div class="radio-group" role="radiogroup" aria-label="Darstellen nach">
           <label class="radio-item">
             <input type="radio" name="metric" value="travel_time" checked />
-            <span>Reisezeit Zug</span>
+            <span data-i18n="metric.travel_time">Reisezeit Zug</span>
           </label>
           <label class="radio-item">
             <input type="radio" name="metric" value="car_travel_time" />
-            <span>Reisezeit Auto</span>
+            <span data-i18n="metric.car_travel_time">Reisezeit Auto</span>
           </label>
           <label class="radio-item">
             <input type="radio" name="metric" value="transfers" />
-            <span>Umstiege Zug</span>
+            <span data-i18n="metric.transfers">Umstiege Zug</span>
           </label>
           <label class="radio-item">
             <input type="radio" name="metric" value="pt_car_ratio" />
-            <span>ÖPNV/MIV Reisezeitverhältnis</span>
+            <span data-i18n="metric.pt_car_ratio">ÖPNV/MIV Reisezeitverhältnis</span>
           </label>
         </div>
       </div>
 
+        <div class="field">
+          <label data-i18n="sidebar.dataset">Verkehrsart</label>
+          <div class="dataset-tabs" role="tablist" aria-label="Verkehrsart">
+            <button type="button" class="dataset-tab active" data-value="all" data-i18n="dataset.all">Alle Züge</button>
+            <button type="button" class="dataset-tab" data-value="regional" data-i18n="dataset.regional">Nur Regionalverkehr</button>
+          </div>
+        </div>
+
       <div class="field">
         <div class="row">
-          <label for="hour">Uhrzeit (Abfahrtsstunde)</label>
+          <label for="hour" data-i18n="sidebar.hour">Uhrzeit (Abfahrtsstunde)</label>
           <div class="muted"><span id="hourLabel">8</span>:00</div>
         </div>
         <input id="hour" type="range" min="0" max="23" step="1" value="8" />
       </div>
 
       <div class="field">
-        <label for="zone">Zone</label>
+        <label for="zone" data-i18n="sidebar.zone">Zone</label>
         <select id="zone">
-          <option value="">(Alle Zonen)</option>
+          <option value="" data-i18n="sidebar.all_zones">(Alle Zonen)</option>
         </select>
       </div>
 
       <div class="ranking-grid">
         <div class="ranking-card">
-          <div class="ranking-title">Top 3</div>
+          <div class="ranking-title" data-i18n="ranking.top3">Top 3</div>
           <div id="top3Table"></div>
         </div>
         <div class="ranking-card">
-          <div class="ranking-title">Letzte 3</div>
+          <div class="ranking-title" data-i18n="ranking.bottom3">Letzte 3</div>
           <div id="worst3Table"></div>
         </div>
       </div>
 
       <div class="sidebar-footer">
-        <p>Quellen und Anmerkungen sind auf der GitHub Seite des Projektes oder unter dem untenstehenden Link zu finden</p>
-        <a class="github-link" href="https://github.com/tarikels/deutsche-bahn-traveltimes" target="_blank" rel="noopener noreferrer" aria-label="GitHub Projektseite öffnen">
+        <p data-i18n="footer.sources">Quellen und Anmerkungen sind auf der GitHub Seite des Projektes oder unter dem untenstehenden Link zu finden</p>
+        <a class="github-link" href="https://github.com/tarikels/deutsche-bahn-traveltimes" target="_blank" rel="noopener noreferrer" aria-label="GitHub Projektseite öffnen" data-i18n-aria-label="footer.github_aria">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.426 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.866-.013-1.7-2.782.605-3.369-1.344-3.369-1.344-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.104-.253-.447-1.272.098-2.65 0 0 .84-.27 2.75 1.027A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.297 2.748-1.027 2.748-1.027.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.481A10.019 10.019 0 0 0 22 12.017C22 6.484 17.523 2 12 2Z"></path>
           </svg>
           <span>GitHub</span>
         </a>
-        <a class="data-link" href="/about-data">Daten & Methodik</a>
+        <a id="dataPageLink" class="data-link" href="/about-data" data-i18n="footer.data_methodology"> Daten & Methodik </a>
       </div>
     </div>
 
-    <div class="map-panel">
+    <div class="map-panel" style="position:relative;">
       <div class="page-corner-linkbox">
-        <img src="/data/icons/trains.jpg" alt="Zug" class="page-corner-image">
+        <img src="/data/icons/trains.jpg" alt="Zug" class="page-corner-image" data-i18n-alt="map.train_alt">
+      </div>
+      <div style="position:absolute; top:14px; left:14px; z-index:1000; display:flex; gap:6px; align-items:center; background:rgba(255,255,255,0.96); border:1px solid #d1d5db; border-radius:10px; padding:4px; box-shadow:0 1px 2px rgba(0,0,0,0.08);">
+        <button id="langDe" type="button" style="border:0; background:transparent; color:#111827; border-radius:8px; padding:6px 10px; font:inherit; cursor:pointer; font-weight:600;">DE</button>
+        <button id="langEn" type="button" style="border:0; background:transparent; color:#111827; border-radius:8px; padding:6px 10px; font:inherit; cursor:pointer; font-weight:600;">EN</button>
       </div>
       <div class="map-header">
         <div class="title-hero">
-          <h1>Erreichbarkeit im deutschen Schienennetz</h1>
+          <h1 data-i18n="hero.title">Erreichbarkeit im deutschen Schienennetz</h1>
         </div>
-        <p>Interaktive Karte der Erreichbarkeit nach Reisezeit, Umstiegen und ÖPNV/MIV-Verhältnis</p>
+        <p data-i18n="hero.subtitle">Interaktive Karte der Erreichbarkeit nach Reisezeit, Umstiegen und ÖPNV/MIV-Verhältnis</p>
       </div>
       <div id="map" class="map"></div>
     </div>

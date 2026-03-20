@@ -87,7 +87,8 @@ def compute_zone_od_one_time(
 
     # important for some zone set specific stations e.g. for berlin: Berlin Hbf, münchen: München Hbf
     reps.loc[reps["zone_id"].astype(str) == "11000", "stop_id"] = "252903"
-    reps.loc[reps["zone_id"].astype(str) == "09162", "stop_id"] = "457881"
+    #reps.loc[reps["zone_id"].astype(str) == "09162", "stop_id"] = "457881"
+    reps.loc[reps["zone_id"].astype(str) == "09162", "stop_id"] = "236164"
 
     rep_stop_ids = set(reps["stop_id"].astype(str))
     zone_by_stop = dict(zip(reps["stop_id"].astype(str), reps["zone_id"].astype(str)))

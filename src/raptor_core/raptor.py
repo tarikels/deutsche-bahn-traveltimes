@@ -12,7 +12,7 @@ into readable connection summaries.
 # Standard
 from bisect import bisect_left
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Optional, Set, Tuple
+from typing import Dict, Iterable, List, Optional, Set, Tuple, Any
 
 # Third-party
 import pandas as pd
@@ -650,3 +650,137 @@ def reconstruct_connection(best: list[dict[str, tuple[int, dict]]], destination_
         }
         for journey in journeys
     ]
+
+
+def best_connection_with_names(*, best: list[dict[str, tuple[int, dict]]], destination_stop_ids: set[str],
+                               feed: dict[str, pd.DataFrame], origin_dep_time: int | None = None,
+                               wait_window_sec: int = 120 * 60) -> dict[str, Any] | None:
+    """
+    Return the single best reconstructed connection with resolved stop in readable format. Only
+    used for tests.
+
+    Args:
+        best: RAPTOR predecessor structure.
+        destination_stop_ids: Target stop ids for reconstruction.
+        feed: GTFS feed dictionary containing at least stops.txt, trips.txt, routes.txt.
+        origin_dep_time: Earliest requested departure time in seconds.
+        wait_window_sec: Allowed waiting time at the origin.
+
+    Returns:
+        One dict describing the best connection in readable form, or None if
+        no connection exists.
+    """
+    journeys = reconstruct_connection(
+        best,
+        destination_stop_ids,
+        connections_for_all=False,
+        origin_dep_time=origin_dep_time,
+        wait_window_sec=wait_window_sec,
+    )
+
+    if not journeys:
+        return None
+
+    # reconstruct_connection already sorts journeys, so the first one is the best
+    best_journey = journeys[0]
+
+    stops_df = feed["stops.txt"].copy()
+    trips_df = feed["trips.txt"].copy()
+    routes_df = feed["routes.txt"].copy()
+
+    stops_df["stop_id"] = stops_df["stop_id"].astype(str)
+    trips_df["trip_id"] = trips_df["trip_id"].astype(str)
+    routes_df["route_id"] = routes_df["route_id"].astype(str)
+
+    stop_name_by_id = dict(zip(stops_df["stop_id"], stops_df.get("stop_name", stops_df["stop_id"])))
+
+    trip_cols = ["trip_id"]
+    for col in ("route_id", "trip_headsign", "trip_short_name"):
+        if col in trips_df.columns:
+            trip_cols.append(col)
+    trips_lookup = trips_df[trip_cols].drop_duplicates("trip_id").set_index("trip_id").to_dict("index")
+
+    route_cols = ["route_id"]
+    for col in ("route_short_name", "route_long_name", "route_type"):
+        if col in routes_df.columns:
+            route_cols.append(col)
+    routes_lookup = routes_df[route_cols].drop_duplicates("route_id").set_index("route_id").to_dict("index")
+
+    readable_legs: list[dict[str, Any]] = []
+
+    for leg in best_journey["legs"]:
+        board_stop_id = str(leg["board_stop_id"])
+        alight_stop_id = str(leg["alight_stop_id"])
+
+        board_stop_name = stop_name_by_id.get(board_stop_id, board_stop_id)
+        alight_stop_name = stop_name_by_id.get(alight_stop_id, alight_stop_id)
+
+        if leg["mode"] == "walk":
+            readable_legs.append({
+                "mode": "walk",
+                "from_stop_id": board_stop_id,
+                "from_stop_name": board_stop_name,
+                "to_stop_id": alight_stop_id,
+                "to_stop_name": alight_stop_name,
+                "departure_time": gtfs_io_utilities.seconds_to_gtfs_time(leg["board_time"]),
+                "arrival_time": gtfs_io_utilities.seconds_to_gtfs_time(leg["alight_time"]),
+                "duration_sec": int(leg["alight_time"] - leg["board_time"]),
+                "instruction": f"Walk from {board_stop_name} to {alight_stop_name}",
+            })
+            continue
+
+        trip_id = str(leg["trip_id"]) if leg.get("trip_id") is not None else None
+        route_id = str(leg["route_id"]) if leg.get("route_id") is not None else None
+
+        trip_info = trips_lookup.get(trip_id, {}) if trip_id is not None else {}
+        if route_id is None and "route_id" in trip_info:
+            route_id = str(trip_info["route_id"])
+
+        route_info = routes_lookup.get(route_id, {}) if route_id is not None else {}
+
+        route_short_name = route_info.get("route_short_name")
+        route_long_name = route_info.get("route_long_name")
+        trip_headsign = trip_info.get("trip_headsign")
+        trip_short_name = trip_info.get("trip_short_name")
+
+        line_label = (
+            route_short_name
+            or trip_short_name
+            or route_long_name
+            or route_id
+            or "unknown line"
+        )
+
+        readable_legs.append({
+            "mode": "ride",
+            "route_id": route_id,
+            "trip_id": trip_id,
+            "line": line_label,
+            "route_short_name": route_short_name,
+            "route_long_name": route_long_name,
+            "trip_headsign": trip_headsign,
+            "trip_short_name": trip_short_name,
+            "from_stop_id": board_stop_id,
+            "from_stop_name": board_stop_name,
+            "to_stop_id": alight_stop_id,
+            "to_stop_name": alight_stop_name,
+            "departure_time": gtfs_io_utilities.seconds_to_gtfs_time(leg["board_time"]),
+            "arrival_time": gtfs_io_utilities.seconds_to_gtfs_time(leg["alight_time"]),
+            "duration_sec": int(leg["alight_time"] - leg["board_time"]),
+            "instruction": (
+                f"Take {line_label}"
+                + (f" towards {trip_headsign}" if trip_headsign else "")
+                + f" from {board_stop_name} to {alight_stop_name}"
+            ),
+        })
+
+    return {
+        "destination_stop_id": str(best_journey["destination_stop_id"]),
+        "destination_stop_name": stop_name_by_id.get(str(best_journey["destination_stop_id"]),
+                                                     str(best_journey["destination_stop_id"])),
+        "arrival_time": gtfs_io_utilities.seconds_to_gtfs_time(best_journey["arrival_time"]),
+        "first_board_time": gtfs_io_utilities.seconds_to_gtfs_time(best_journey["first_board_time"]),
+        "total_travel_time_sec": int(best_journey["total_travel_time"]),
+        "transfers": int(best_journey["transfers"]),
+        "legs": readable_legs,
+    }

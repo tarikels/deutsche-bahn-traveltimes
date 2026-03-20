@@ -15,7 +15,9 @@ REPO_ROOT: Final[Path] = Path(__file__).resolve().parents[1]
 
 # Data root
 OD_DIR: Final[Path] = REPO_ROOT / "data" / "od"
+REGIONAL_OD_DIR: Final[Path] = REPO_ROOT / "data" / "od_regional"
 CAR_OD_DIR: Final[Path] = REPO_ROOT / "data" / "car_od"
+
 
 # VG1000 shapefile bundle
 VG1000_DIR: Final[Path] = (

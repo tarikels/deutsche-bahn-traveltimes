@@ -12,6 +12,7 @@ const state = {
   hour: 8,
   zone_id: null,
   metric: "travel_time",
+  dataset: "all",
   selectedLayer: null,
   zonesById: new Map(),
   zoneNamesById: new Map(),
@@ -29,7 +30,231 @@ const hourEl = document.getElementById("hour");
 const hourLabelEl = document.getElementById("hourLabel");
 const zoneEl = document.getElementById("zone");
 const dayTypeTabs = document.querySelectorAll(".daytype-tab");
+const datasetTabs = document.querySelectorAll(".dataset-tab");
 const metricRadios = document.querySelectorAll('input[name="metric"]');
+
+
+state.lang = localStorage.getItem("lang") || "de";
+
+const translations = {
+  de: {
+    page_title: "Erreichbarkeit im Schienenverkehr",
+    sidebar: {
+      filters: "Filterauswahl",
+      status: "Stand: Fahrplan 2026 Kalenderwoche 9",
+      daytype: "Tagtyp",
+      metric: "Darstellen nach",
+      dataset: "Verkehrsart",
+      hour: "Uhrzeit (Abfahrtsstunde)",
+      zone: "Zone",
+      all_zones: "(Alle Zonen)",
+    },
+    daytype: {
+      weekday: "Wochentag",
+      saturday: "Samstag",
+      sunday: "Sonntag",
+    },
+    dataset: {
+      all: "Alle Züge",
+      regional: "Nur Regionalverkehr",
+    },
+    metric: {
+      travel_time: "Reisezeit Zug",
+      car_travel_time: "Reisezeit Auto",
+      transfers: "Umstiege Zug",
+      pt_car_ratio: "ÖPNV/MIV Reisezeitverhältnis",
+    },
+    ranking: {
+      top3: "Top 3",
+      bottom3: "Letzte 3",
+      no_data: "Keine Daten vorhanden",
+    },
+    footer: {
+      sources: "Quellen und Anmerkungen sind auf der GitHub Seite des Projektes oder unter dem untenstehenden Link zu finden",
+      data_methodology: "Daten & Methodik",
+      github_aria: "GitHub Projektseite öffnen",
+    },
+    hero: {
+      title: "Erreichbarkeit im deutschen Schienennetz",
+      subtitle: "Interaktive Karte der Erreichbarkeit nach Reisezeit, Umstiegen und ÖPNV/MIV-Verhältnis",
+    },
+    map: {
+      train_alt: "Zug",
+    },
+    legend: {
+      avg_train_time: "Ø Reisezeit Zug (min)",
+      avg_car_time: "Ø Reisezeit Auto (min)",
+      train_time: "Reisezeit Zug (min)",
+      car_time: "Reisezeit Auto (min)",
+      avg_transfers: "Ø Umstiege Zug",
+      transfers: "Umstiege Zug",
+      ratio: "ÖPNV/MIV Verhältnis",
+      no_data: "Keine Daten",
+    },
+    tooltip: {
+      zone_origin_stop: "Zonen-Starthaltestelle",
+      avg_train_time: "Ø Reisezeit mit dem Zug zu allen Zonen",
+      avg_car_time: "Ø Reisezeit mit dem Auto zu allen Zonen",
+      avg_ratio: "Ø ÖPNV/MIV Reisezeitverhältnis zu allen Zonen",
+      avg_transfers: "Ø Umstiege mit dem Zug zu allen Zonen",
+      no_trips: "Keine Fahrten zu dieser Stunde",
+      start_station: "Start-Station",
+      destination_station: "Ziel-Station",
+      train_time: "Reisezeit Zug",
+      car_time: "Reisezeit Auto",
+      ratio: "ÖPNV/MIV Reisezeitverhältnis",
+      transfers: "Umstiege",
+    },
+    misc: {
+      no_data_available: "Keine Daten vorhanden",
+      dash: "—",
+    },
+    units: {
+      min: "min",
+      hour: "h",
+    },
+  },
+  en: {
+    page_title: "Accessibility in rail transport",
+    sidebar: {
+      filters: "Filters",
+      status: "Status: 2026 timetable calendar week 9",
+      daytype: "Day type",
+      metric: "Display by",
+      dataset: "Service type",
+      hour: "Time of day (departure hour)",
+      zone: "Zone",
+      all_zones: "(All zones)",
+    },
+    daytype: {
+      weekday: "Weekday",
+      saturday: "Saturday",
+      sunday: "Sunday",
+    },
+    dataset: {
+      all: "All trains",
+      regional: "Regional trains only",
+    },
+    metric: {
+      travel_time: "Rail travel time",
+      car_travel_time: "Car travel time",
+      transfers: "Rail transfers",
+      pt_car_ratio: "Public transport / car travel time ratio",
+    },
+    ranking: {
+      top3: "Top 3",
+      bottom3: "Bottom 3",
+      no_data: "No data available",
+    },
+    footer: {
+      sources: "Sources and notes can be found on the project's GitHub page or via the link below",
+      data_methodology: "Data & methodology",
+      github_aria: "Open GitHub project page",
+    },
+    hero: {
+      title: "Accessibility in the German rail network",
+      subtitle: "Interactive map of accessibility by travel time, transfers and public transport/car ratio",
+    },
+    map: {
+      train_alt: "Train",
+    },
+    legend: {
+      avg_train_time: "Avg. rail travel time (min)",
+      avg_car_time: "Avg. car travel time (min)",
+      train_time: "Rail travel time (min)",
+      car_time: "Car travel time (min)",
+      avg_transfers: "Avg. rail transfers",
+      transfers: "Rail transfers",
+      ratio: "Public transport / car ratio",
+      no_data: "No data",
+    },
+    tooltip: {
+      zone_origin_stop: "Zone origin stop",
+      avg_train_time: "Avg. rail travel time to all zones",
+      avg_car_time: "Avg. car travel time to all zones",
+      avg_ratio: "Avg. public transport / car travel time ratio to all zones",
+      avg_transfers: "Avg. rail transfers to all zones",
+      no_trips: "No trips at this hour",
+      start_station: "Origin station",
+      destination_station: "Destination station",
+      train_time: "Rail travel time",
+      car_time: "Car travel time",
+      ratio: "Public transport / car travel time ratio",
+      transfers: "Transfers",
+    },
+    misc: {
+      no_data_available: "No data available",
+      dash: "—",
+    },
+    units: {
+      min: "min",
+      hour: "h",
+    },
+  },
+};
+
+function t(path) {
+  const parts = path.split(".");
+  let value = translations[state.lang];
+
+  for (const part of parts) {
+    value = value?.[part];
+  }
+
+  return value ?? path;
+}
+
+function applyTranslations() {
+  document.documentElement.lang = state.lang;
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (el.tagName.toLowerCase() === "title") {
+      document.title = t(key);
+    } else {
+      el.textContent = t(key);
+    }
+  });
+
+  const dataPageLink = document.getElementById("dataPageLink");
+  if (dataPageLink) {
+    dataPageLink.href = state.lang === "en" ? "/about-data-en" : "/about-data";
+  }
+
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
+    el.setAttribute("aria-label", t(el.dataset.i18nAriaLabel));
+  });
+
+  document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+    el.setAttribute("alt", t(el.dataset.i18nAlt));
+  });
+
+  if (zoneEl) {
+    const defaultOption = zoneEl.querySelector('option[value=""]');
+    if (defaultOption) defaultOption.textContent = t("sidebar.all_zones");
+  }
+
+  const langDe = document.getElementById("langDe");
+  const langEn = document.getElementById("langEn");
+  if (langDe) {
+    langDe.style.background = state.lang === "de" ? "#111827" : "transparent";
+    langDe.style.color = state.lang === "de" ? "#ffffff" : "#111827";
+  }
+  if (langEn) {
+    langEn.style.background = state.lang === "en" ? "#111827" : "transparent";
+    langEn.style.color = state.lang === "en" ? "#ffffff" : "#111827";
+  }
+
+  updateLegend();
+  updateRankings(lastValues || {});
+}
+
+function setLanguage(lang) {
+  state.lang = lang;
+  localStorage.setItem("lang", lang);
+  applyTranslations();
+}
+
 
 function selectedStyle() {
   return { weight: 3, color: "#184e77", fillColor: "#2b8cbe", fillOpacity: 0.38 };
@@ -141,7 +366,7 @@ function legendItemsForCurrentMetric() {
   if (state.metric === "travel_time" || state.metric === "car_travel_time") {
     if (lastMode === "origin_avg") {
       return {
-        title: state.metric === "travel_time" ? "Ø Reisezeit Zug (min)" : "Ø Reisezeit Auto (min)",
+        title: state.metric === "travel_time" ? t("legend.avg_train_time") : t("legend.avg_car_time"),
         items: [
           ["#1a9850", "≤ 180"],
           ["#66bd63", "181–240"],
@@ -150,13 +375,13 @@ function legendItemsForCurrentMetric() {
           ["#fdae61", "361–420"],
           ["#f46d43", "421–480"],
           ["#d73027", "> 480"],
-          ["#e5e7eb", "Keine Daten"],
+          ["#e5e7eb", t("legend.no_data")],
         ],
       };
     }
 
     return {
-      title: state.metric === "travel_time" ? "Reisezeit Zug (min)" : "Reisezeit Auto (min)",
+      title: state.metric === "travel_time" ? t("legend.train_time") : t("legend.car_time"),
       items: [
         ["#1a9850", "≤ 90"],
         ["#66bd63", "91–150"],
@@ -165,7 +390,7 @@ function legendItemsForCurrentMetric() {
         ["#fdae61", "271–330"],
         ["#f46d43", "331–390"],
         ["#d73027", "> 390"],
-        ["#e5e7eb", "Keine Daten"],
+        ["#e5e7eb", t("legend.no_data")],
       ],
     };
   }
@@ -173,7 +398,7 @@ function legendItemsForCurrentMetric() {
   if (state.metric === "transfers") {
     if (lastMode === "origin_avg") {
       return {
-        title: "Ø Umstiege Zug",
+        title: t("legend.avg_transfers"),
         items: [
           ["#1a9850", "≤ 1.0"],
           ["#66bd63", "≤ 1.5"],
@@ -182,13 +407,13 @@ function legendItemsForCurrentMetric() {
           ["#fdae61", "≤ 3.0"],
           ["#f46d43", "≤ 3.5"],
           ["#d73027", "> 3.5"],
-          ["#e5e7eb", "Keine Daten"],
+          ["#e5e7eb", t("legend.no_data")],
         ],
       };
     }
 
     return {
-      title: "Umstiege Zug",
+      title: t("legend.transfers"),
       items: [
         ["#1a9850", "0"],
         ["#66bd63", "1"],
@@ -196,13 +421,13 @@ function legendItemsForCurrentMetric() {
         ["#fee08b", "3"],
         ["#fdae61", "4"],
         ["#d73027", "≥ 5"],
-        ["#e5e7eb", "Keine Daten"],
+        ["#e5e7eb", t("legend.no_data")],
       ],
     };
   }
 
   return {
-    title: "ÖPNV/MIV Verhältnis",
+    title: t("legend.ratio"),
     items: [
       ["#1a9850", "≤ 1.00x"],
       ["#66bd63", "≤ 1.25x"],
@@ -211,7 +436,7 @@ function legendItemsForCurrentMetric() {
       ["#fdae61", "≤ 3.00x"],
       ["#f46d43", "≤ 4.00x"],
       ["#d73027", "> 4.00x"],
-      ["#e5e7eb", "Keine Daten"],
+      ["#e5e7eb", t("legend.no_data")],
     ],
   };
 }
@@ -234,20 +459,20 @@ function buildLegendHtml() {
 }
 
 function formatDuration(seconds) {
-  if (seconds == null || !isFinite(seconds)) return "Keine Daten vorhanden";
+  if (seconds == null || !isFinite(seconds)) return t("misc.no_data_available");
 
   const totalSeconds = Math.max(0, Math.round(seconds));
   const mins = Math.floor(totalSeconds / 60);
   const hrs = Math.floor(mins / 60);
   const remMins = mins % 60;
 
-  if (hrs <= 0) return `${mins} min`;
-  if (remMins === 0) return `${hrs} h`;
-  return `${hrs} h ${remMins} min`;
+  if (hrs <= 0) return `${mins} ${t("units.min")}`;
+  if (remMins === 0) return `${hrs} ${t("units.hour")}`;
+  return `${hrs} ${t("units.hour")} ${remMins} ${t("units.min")}`;
 }
 
 function formatMetricValue(v) {
-  if (v == null || !isFinite(v)) return "—";
+  if (v == null || !isFinite(v)) return t("misc.dash");
 
   if (state.metric === "travel_time" || state.metric === "car_travel_time") {
     return formatDuration(v);
@@ -266,7 +491,7 @@ function formatMetricValue(v) {
 
 function buildRankingTable(rows) {
   if (!rows.length) {
-    return `<div class="ranking-empty">Keine Daten vorhanden</div>`;
+    return `<div class="ranking-empty">${t("ranking.no_data")}</div>`;
   }
 
   const body = rows.map((r, i) => `
@@ -363,6 +588,7 @@ async function loadMetricAndRender() {
   url.searchParams.set("period", state.period);
   url.searchParams.set("day_type", state.day_type);
   url.searchParams.set("hour", String(state.hour));
+  url.searchParams.set("dataset", state.dataset);
   url.searchParams.set("metric", state.metric);
 
   if (state.zone_id) {
@@ -406,8 +632,8 @@ function updateRankings(valuesByZoneId) {
     }));
 
   if (!entries.length) {
-    topEl.innerHTML = `<div class="ranking-empty">Keine Daten vorhanden</div>`;
-    worstEl.innerHTML = `<div class="ranking-empty">Keine Daten vorhanden</div>`;
+    topEl.innerHTML = `<div class="ranking-empty">${t("ranking.no_data")}</div>`;
+    worstEl.innerHTML = `<div class="ranking-empty">${t("ranking.no_data")}</div>`;
     return;
   }
 
@@ -458,28 +684,28 @@ async function loadZonesGeoJSON() {
           const v = lastValues ? lastValues[zidStr] : null;
           const title = zname ? `${zname} — ${zidStr}` : `${zidStr}`;
           const os = lastOriginStations ? lastOriginStations[zidStr] : null;
-          const originStopTxt = os ? (os.stop_name || "—") : "—";
+          const originStopTxt = os ? (os.stop_name || t("misc.dash")) : t("misc.dash");
 
           let metricLabel = "";
           let metricValue = "";
 
           if (state.metric === "travel_time") {
-            metricLabel = "Ø Reisezeit mit dem Zug zu allen Zonen";
+            metricLabel = t("tooltip.avg_train_time");
             metricValue = formatDuration(v);
           } else if (state.metric === "car_travel_time") {
-            metricLabel = "Ø Reisezeit mit dem Auto zu allen Zonen";
+            metricLabel = t("tooltip.avg_car_time");
             metricValue = formatDuration(v);
           } else if (state.metric === "pt_car_ratio") {
-            metricLabel = "Ø ÖPNV/MIV Reisezeitverhältnis zu allen Zonen";
-            metricValue = (v == null || !isFinite(v)) ? "Keine Fahrten zu dieser Stunde" : `${Number(v).toFixed(2)}x`;
+            metricLabel = t("tooltip.avg_ratio");
+            metricValue = (v == null || !isFinite(v)) ? t("tooltip.no_trips") : `${Number(v).toFixed(2)}x`;
           } else {
-            metricLabel = "Ø Umstiege mit dem Zug zu allen Zonen";
-            metricValue = (v == null || !isFinite(v)) ? "Keine Fahrten zu dieser Stunde" : Number(v).toFixed(1);
+            metricLabel = t("tooltip.avg_transfers");
+            metricValue = (v == null || !isFinite(v)) ? t("tooltip.no_trips") : Number(v).toFixed(1);
           }
 
           const html = `<div style="font-size:14px; line-height:1.2;">
             <div style="font-weight:600; margin-bottom:4px;">${title}</div>
-            <div>Zonen-Starthaltestelle: <b>${originStopTxt}</b></div>
+            <div>${t("tooltip.zone_origin_stop")}: <b>${originStopTxt}</b></div>
             <div>${metricLabel}: <b>${metricValue}</b></div>
           </div>`;
 
@@ -503,30 +729,30 @@ async function loadZonesGeoJSON() {
         let metricValue = "";
 
         if (state.metric === "travel_time") {
-          metricLabel = "Reisezeit Zug";
-          metricValue = isOrigin ? "0 min" : formatDuration(v);
+          metricLabel = t("tooltip.train_time");
+          metricValue = isOrigin ? `0 ${t("units.min")}` : formatDuration(v);
         } else if (state.metric === "car_travel_time") {
-          metricLabel = "Reisezeit Auto";
-          metricValue = isOrigin ? "0 min" : formatDuration(v);
+          metricLabel = t("tooltip.car_time");
+          metricValue = isOrigin ? `0 ${t("units.min")}` : formatDuration(v);
         } else if (state.metric === "pt_car_ratio") {
-          metricLabel = "ÖPNV/MIV Reisezeitverhältnis";
-          metricValue = isOrigin ? "—" : ((v == null || !isFinite(v)) ? "Keine Fahrten zu dieser Stunde" : `${Number(v).toFixed(2)}x`);
+          metricLabel = t("tooltip.ratio");
+          metricValue = isOrigin ? t("misc.dash") : ((v == null || !isFinite(v)) ? t("tooltip.no_trips") : `${Number(v).toFixed(2)}x`);
         } else {
-          metricLabel = "Umstiege";
-          metricValue = (v == null || !isFinite(v)) ? "Keine Fahrten zu dieser Stunde" : String(v);
+          metricLabel = t("tooltip.transfers");
+          metricValue = (v == null || !isFinite(v)) ? t("tooltip.no_trips") : String(v);
         }
 
         const originTxt = lastOriginStation
           ? `${lastOriginStation.stop_name}`
-          : "—";
+          : t("misc.dash");
 
         const ds = lastDestStations ? lastDestStations[zidStr] : null;
-        const destTxt = ds ? `${ds.stop_name}` : "—";
+        const destTxt = ds ? `${ds.stop_name}` : t("misc.dash");
 
         const html = `<div style="font-size:14px; line-height:1.2;">
           <div style="font-weight:600; margin-bottom:4px;">${title}</div>
-          <div>Start-Station: <b>${originTxt}</b></div>
-          <div>Ziel-Station: <b>${destTxt}</b></div>
+          <div>${t("tooltip.start_station")}: <b>${originTxt}</b></div>
+          <div>${t("tooltip.destination_station")}: <b>${destTxt}</b></div>
           <div>${metricLabel}: <b>${metricValue}</b></div>
         </div>`;
 
@@ -569,6 +795,15 @@ dayTypeTabs.forEach((btn) => {
   });
 });
 
+datasetTabs.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    datasetTabs.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.dataset = btn.dataset.value;
+    loadMetricAndRender();
+  });
+});
+
 metricRadios.forEach((r) => {
   r.addEventListener("change", () => {
     if (r.checked) state.metric = r.value;
@@ -587,7 +822,23 @@ zoneEl.addEventListener("change", () => {
   loadMetricAndRender();
 });
 
+const langDeEl = document.getElementById("langDe");
+const langEnEl = document.getElementById("langEn");
+
+if (langDeEl) {
+  langDeEl.addEventListener("click", () => {
+    setLanguage("de");
+  });
+}
+
+if (langEnEl) {
+  langEnEl.addEventListener("click", () => {
+    setLanguage("en");
+  });
+}
+
 (async function boot() {
+  applyTranslations();
   hourLabelEl.textContent = String(state.hour);
   await buildWeekOptions();
   await loadZoneIndex();

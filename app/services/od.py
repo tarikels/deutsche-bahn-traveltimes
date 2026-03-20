@@ -18,29 +18,33 @@ import pandas as pd
 import pyarrow.feather as feather
 
 # Local
-from app.config import OD_DIR, CAR_OD_DIR
+from app.config import OD_DIR, REGIONAL_OD_DIR, CAR_OD_DIR
 
 
-def _od_file(period: str, day_type: str, hour: int) -> Path:
+def _od_file(period: str, day_type: str, hour: int, dataset: str = "all") -> Path:
     """
     Build the Arrow file path for a given selection.
 
     Supports both folder conventions:
       - period=<period> vs <period>
       - day_type=<day_type> vs day_typ=<day_type>
+      - dataset:
+      "all" -> full rail dataset
+      "regional" -> regional-only dataset
     """
+    base_dir = REGIONAL_OD_DIR if dataset == "regional" else OD_DIR
+
     candidates = [
-        OD_DIR / period / f"day_type={day_type}" / f"hour={hour:02d}.arrow",
-        OD_DIR / period / f"day_typ={day_type}" / f"hour={hour:02d}.arrow",
-        OD_DIR / f"period={period}" / f"day_type={day_type}" / f"hour={hour:02d}.arrow",
-        OD_DIR / f"period={period}" / f"day_typ={day_type}" / f"hour={hour:02d}.arrow",
+        base_dir / period / f"day_type={day_type}" / f"hour={hour:02d}.arrow",
+        base_dir / period / f"day_typ={day_type}" / f"hour={hour:02d}.arrow",
+        base_dir / f"period={period}" / f"day_type={day_type}" / f"hour={hour:02d}.arrow",
+        base_dir / f"period={period}" / f"day_typ={day_type}" / f"hour={hour:02d}.arrow",
     ]
 
     for p in candidates:
         if p.exists():
             return p
 
-    # Fall back to the most likely default for error messages/logging.
     return candidates[0]
 
 
@@ -120,8 +124,8 @@ def _load_car_hour_df(hour: int) -> pd.DataFrame:
     return df
 
 
-@lru_cache(maxsize=48)
-def _load_hour_df(period: str, day_type: str, hour: int) -> pd.DataFrame:
+@lru_cache(maxsize=96)
+def _load_hour_df(period: str, day_type: str, hour: int, dataset: str = "all") -> pd.DataFrame:
     """
     Load one Arrow file into a DataFrame and normalize column dtypes.
 
@@ -132,18 +136,18 @@ def _load_hour_df(period: str, day_type: str, hour: int) -> pd.DataFrame:
         period: Calendar week folder name, e.g. "2026W09".
         day_type: Day type folder name, e.g. "weekday".
         hour: Departure hour (0..23).
+        dataset: regional or all
 
     Returns:
         DataFrame containing OD rows. Empty DataFrame if file is missing.
     """
-    path = _od_file(period, day_type, hour)
+    path = _od_file(period, day_type, hour, dataset=dataset)
     if not path.exists():
         return pd.DataFrame()
 
     table = feather.read_table(path)
     df = table.to_pandas()
 
-    # Normalize identifiers as strings (stable keys in JSON and in the UI).
     for col in ("origin_zone_id", "dest_zone_id"):
         if col in df.columns:
             df[col] = df[col].astype(str)
@@ -151,7 +155,8 @@ def _load_hour_df(period: str, day_type: str, hour: int) -> pd.DataFrame:
     return df
 
 
-def od_metric(*, period: str, day_type: str, hour: int, origin_zone_id: str | None, metric: str) -> dict[str, object]:
+def od_metric(*, period: str, day_type: str, hour: int, origin_zone_id: str | None,
+              metric: str, dataset: str = "all",) -> dict[str, object]:
     """
     Return a zone-based metric mapping for a single origin zone.
 
@@ -172,6 +177,7 @@ def od_metric(*, period: str, day_type: str, hour: int, origin_zone_id: str | No
         hour: Departure hour (0..23).
         origin_zone_id: Selected origin zone id. If None, returns average values.
         metric: Metric identifier ("travel_time", "transfers", "car_travel_time" or "pt_car_ratio").
+        dataset: all or regional
     Returns:
         Dict with keys:
             - origin_zone_id: str | None
@@ -179,11 +185,11 @@ def od_metric(*, period: str, day_type: str, hour: int, origin_zone_id: str | No
             - metric: str
             - values: dict[str, int | float] mapping zone_id -> metric value
     """
-    # if no zone is selected return average to all other zones in traveltimes and transfers
+  # if no zone is selected return average to all other zones in traveltimes and transfers
     if metric == "car_travel_time":
         df = _load_car_hour_df(hour)
     elif metric == "pt_car_ratio":
-        pt_df = _load_hour_df(period, day_type, hour)
+        pt_df = _load_hour_df(period, day_type, hour, dataset=dataset)
         car_df = _load_car_hour_df(hour)
 
         if pt_df.empty or car_df.empty:
@@ -206,7 +212,7 @@ def od_metric(*, period: str, day_type: str, hour: int, origin_zone_id: str | No
             df = df.loc[df["car_travel_time_sec"] > 0].copy()
             df["pt_car_ratio"] = df["total_travel_time_sec"] / df["car_travel_time_sec"]
     else:
-        df = _load_hour_df(period, day_type, hour)
+        df = _load_hour_df(period, day_type, hour, dataset=dataset)
 
     if not origin_zone_id:
         if df.empty:
