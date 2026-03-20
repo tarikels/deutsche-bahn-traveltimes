@@ -73,7 +73,7 @@
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        background: white;
+        background: transparent;
       }
 
       .notes-box {
@@ -200,12 +200,6 @@
 
         .sidebar-footer {
           margin-top: 20px;
-          padding-top: 16px;
-          border-top: 1px solid #e5e7eb;
-        }
-
-        .sidebar-footer {
-          margin-top: auto;
           padding-top: 16px;
           border-top: 1px solid #e5e7eb;
           display: flex;
@@ -359,48 +353,53 @@
             display: flex;
             flex-direction: column;
           }
+        .content {
+          padding: 16px;
+        }
 
-          .content {
-            padding: 16px;
-          }
+        .map-header {
+          margin: 0 0 12px;
+          max-width: none;
+        }
 
-          .map-header {
-            margin: 0 0 12px 0;
-            max-width: none;
-          }
+        .map-header h1 {
+          font-size: 18px;
+        }
 
-          .map-header h1 {
-            font-size: 18px;
-          }
+        .map-header p {
+          font-size: 13px;
+        }
 
-          .map-header p {
-            font-size: 13px;
-          }
+        .map {
+          width: 100%;
+          height: 56vh;
+          min-height: 360px;
+          border-radius: 12px;
+        }
 
-          .map {
-            height: 56vh;
-            min-height: 360px;
-            border-radius: 12px;
-            width: 100%;
-          }
+        .notes-box {
+          margin: 16px 0 0;
+          padding: 16px;
+          border-radius: 12px;
+        }
 
-          .notes-box {
-            margin-top: 16px;
-            margin-bottom: 0;
-            padding: 16px;
-            border-radius: 12px;
-          }
+        .page-corner-image {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 18px;
+        }
 
-          .page-corner-image {
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 18px;
-          }
+        /* Leaflet */
+        .leaflet-container {
+          background: #fff;
+        }
 
-          .leaflet-container img,
-          .leaflet-tile {
-            max-width: none !important;
-            max-height: none !important;
-          }
+        .leaflet-container img,
+        .leaflet-tile {
+          max-width: none !important;
+          max-height: none !important;
+          border: 0 !important;
+          outline: 0 !important;
+          image-rendering: auto;
         }
