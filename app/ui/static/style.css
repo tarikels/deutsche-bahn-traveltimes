@@ -346,36 +346,19 @@
             padding: 16px 16px 0 16px;
           }
 
-        @media (max-width: 700px) {
-          .app {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-              "map"
-              "sidebar";
-          }
-
-          .map-panel {
-            grid-area: map;
-          }
-
           .sidebar {
-            grid-area: sidebar;
+            border-right: none;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 14px;
+            overflow: visible;
+            position: static;
+            top: auto;
+            height: auto;
+            box-sizing: border-box;
+            background: white;
+            display: flex;
+            flex-direction: column;
           }
-        }
-
-        .sidebar {
-          border-right: none;
-          border-bottom: 1px solid #e5e7eb;
-          padding: 14px;
-          overflow: visible;
-          position: static;
-          top: auto;
-          height: auto;
-          box-sizing: border-box;
-          background: white;
-          display: flex;
-          flex-direction: column;
-        }
 
           .content {
             padding: 16px;
@@ -415,18 +398,9 @@
             height: 18px;
           }
 
+          .leaflet-container img,
           .leaflet-tile {
-          width: 257px !important;
-          height: 257px !important;
-          margin-left: -0.5px !important;
-          margin-top: -0.5px !important;
-          border: none !important;
-          outline: none !important;
-        }
-
-        .leaflet-container img,
-        .leaflet-tile {
-          max-width: none !important;
-          max-height: none !important;
-        }
+            max-width: none !important;
+            max-height: none !important;
+          }
         }
