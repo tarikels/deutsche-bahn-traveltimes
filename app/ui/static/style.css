@@ -340,11 +340,13 @@
           }
 
           .map-panel {
-            order: 2;
-            min-height: auto;
-            margin-bottom: 0;
-            padding: 16px 16px 0 16px;
+            order: 1;
           }
+
+          .sidebar {
+            order: 2;
+          }
+        }
 
         .sidebar {
           border-right: none;
