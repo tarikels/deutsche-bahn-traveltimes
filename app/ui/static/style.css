@@ -340,11 +340,26 @@
           }
 
           .map-panel {
-            order: 1;
+            order: 2;
+            min-height: auto;
+            margin-bottom: 0;
+            padding: 16px 16px 0 16px;
+          }
+
+        @media (max-width: 700px) {
+          .app {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+              "map"
+              "sidebar";
+          }
+
+          .map-panel {
+            grid-area: map;
           }
 
           .sidebar {
-            order: 2;
+            grid-area: sidebar;
           }
         }
 
