@@ -34,7 +34,7 @@ const datasetTabs = document.querySelectorAll(".dataset-tab");
 const metricRadios = document.querySelectorAll('input[name="metric"]');
 
 
-state.lang = localStorage.getItem("lang") || "de";
+state.lang = localStorage.getItem("lang") || "en";
 
 const translations = {
   de: {
@@ -429,13 +429,13 @@ function legendItemsForCurrentMetric() {
   return {
     title: t("legend.ratio"),
     items: [
-      ["#1a9850", "≤ 1.00x"],
-      ["#66bd63", "≤ 1.25x"],
-      ["#a6d96a", "≤ 1.50x"],
-      ["#fee08b", "≤ 2.00x"],
-      ["#fdae61", "≤ 3.00x"],
-      ["#f46d43", "≤ 4.00x"],
-      ["#d73027", "> 4.00x"],
+      ["#1a9850", "≤ 0.75x"],
+      ["#66bd63", "≤ 1.00x"],
+      ["#a6d96a", "≤ 1.25x"],
+      ["#fee08b", "≤ 1.50x"],
+      ["#fdae61", "≤ 1.75x"],
+      ["#f46d43", "≤ 2.00x"],
+      ["#d73027", "> 2.25x"],
       ["#e5e7eb", t("legend.no_data")],
     ],
   };
@@ -534,12 +534,12 @@ function colorForTransfers(x) {
 
 function colorForRatio(x) {
   if (x == null || !isFinite(x)) return "#e5e7eb";
-  if (x <= 1.0) return "#1a9850";
-  if (x <= 1.25) return "#66bd63";
-  if (x <= 1.5) return "#a6d96a";
-  if (x <= 2.0) return "#fee08b";
-  if (x <= 3.0) return "#fdae61";
-  if (x <= 4.0) return "#f46d43";
+  if (x <= 0.75) return "#1a9850";
+  if (x <= 1.0) return "#66bd63";
+  if (x <= 1.25) return "#a6d96a";
+  if (x <= 1.5) return "#fee08b";
+  if (x <= 1.75) return "#fdae61";
+  if (x <= 2) return "#f46d43";
   return "#d73027";
 }
 
