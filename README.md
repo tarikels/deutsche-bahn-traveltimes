@@ -1,9 +1,12 @@
 ## Deutsche-Bahn Traveltimes
 
-An interactive tool for exploring rail accessibility across Germany.
-Using public GTFS timetable data, this project calculates and visualizes travel times, transfers, car travel times, and public-transport-vs-car accessibility ratios on a zone-level interactive map.
+**Explore how well different parts of Germany are connected by rail.**
 
-Try the web map: https://traveltimes.up.railway.app/
+This project uses public GTFS timetable data to calculate travel times between regions and visualize them on an interactive map. It allows you to compare public transport travel times, number of transfers, car travel times, and the ratio between public transport and car accessibility.
+
+The repository also includes a reusable pipeline for calculating and visualizing travel times from any GTFS timetable dataset.
+
+**Try the web map:** https://traveltimes.up.railway.app/
 
 <p align="center">
   <img src="data/example.png" alt="Project preview" width="1300">
