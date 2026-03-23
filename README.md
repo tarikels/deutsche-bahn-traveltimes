@@ -2,7 +2,7 @@
 
 This project analyses how well different parts of Germany are connected by rail using public timetable data. It combines GTFS-based public transport routing, zone-level aggregation and an interactive web map to visualize travel times, number of transfers, car travel times, and the ratio between public transport and car travel times. The goal is to make regional differences in accessibility comparable and easy to explore. This project also provides a pipeline for calculating and visualizing travel times based on any GTFS timetable.
 
-The project also includes a website that visualizes the data for a typical calendar week: https://traveltimes.up.railway.app/.
+The project also includes an interactive Web Tool visualizing the data: https://traveltimes.up.railway.app/.
 
 <p align="center">
   <img src="data/example.png" alt="Project preview" width="1300">
