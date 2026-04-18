@@ -115,7 +115,7 @@ const translations = {
     },
   },
   en: {
-    page_title: "Accessibility in rail transport",
+    page_title: "Connectivity in rail transport",
     sidebar: {
       filters: "Filters",
       status: "Status: 2026 timetable calendar week 9",
@@ -152,8 +152,8 @@ const translations = {
       github_aria: "Open GitHub project page",
     },
     hero: {
-      title: "Accessibility in the German rail network",
-      subtitle: "Interactive map of accessibility by travel time, transfers and public transport/car ratio",
+      title: "Connectivity in the German rail network",
+      subtitle: "Interactive map of connectivity by travel time, transfers and public transport/car ratio",
     },
     map: {
       train_alt: "Train",
